@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alejo’s pistacho — Delicias en tu mesa</title>
+  
+  <style>
+    /* ==========================================================================
+       1. VARIABLES Y ESTILOS GENERALES
+       ========================================================================== */
+    :root {
+      /* Colores corporativos definidos para Alejo's pistacho */
+      --color-principal: #800020;       /* Vino tinto */
+      --color-secundario: #ffffff;      /* Blanco */
+      --color-complementario: #1a1a1a;  /* Negro / Texto oscuro */
+      --color-fondo: #ffffff;           /* Fondo general */
+      --color-fondo-suave: #f9f6f6;     /* Fondo secundario tenue */
+      --color-borde: #e2d8d8;           /* Bordes sutiles */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif; /* Tipografía para textos */
+      background-color: var(--color-fondo);
+      color: var(--color-complementario);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: Helvetica, sans-serif; /* Tipografía para títulos */
+      color: var(--color-principal);
+      margin-bottom: 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* Estilos reutilizables para botones */
+    .boton {
+      display: inline-block;
+      background-color: var(--color-principal);
+      color: var(--color-secundario);
+      padding: 12px 24px;
+      border: 2px solid var(--color-principal);
+      border-radius: 6px;
+      font-family: Helvetica, sans-serif;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .boton:hover {
+      background-color: var(--color-secundario);
+      color: var(--color-principal);
+    }
+
+    .boton-secundario {
+      background-color: transparent;
+      color: var(--color-principal);
+      border: 2px solid var(--color-principal);
+    }
+
+    .boton-secundario:hover {
+      background-color: var(--color-principal);
+      color: var(--color-secundario);
+    }
+
+    .contenedor {
+      width: 90%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 0;
+    }
+
+    .titulo-seccion {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .subtitulo-seccion {
+      text-align: center;
+      color: #666666;
+      margin-bottom: 40px;
+    }
+
+    /* ==========================================================================
+       2. HEADER Y NAVEGACIÓN
+       ========================================================================== */
+    .encabezado {
+      background-color: var(--color-principal);
+      color: var(--color-secundario);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .encabezado-contenedor {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: Helvetica, sans-serif;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--color-secundario);
+    }
+
+    .logo span {
+      font-size: 0.9rem;
+      display: block;
+      font-weight: normal;
+      opacity: 0.9;
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+    }
+
+    .menu a {
+      color: var(--color-secundario);
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ==========================================================================
+       3. SECCIÓN HERO
+       ========================================================================== */
+    .hero {
+      background-color: var(--color-fondo-suave);
+      border-bottom: 1px solid var(--color-borde);
+    }
+
+    .hero-contenedor {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding: 60px 0;
+    }
+
+    .hero-columna-izquierda {
+      flex: 1;
+    }
+
+    .hero-columna-derecha {
+      flex: 1;
+    }
+
+    .hero-titulo {
+      font-size: 2.8rem;
+      line-height: 1.2;
+      color: var(--color-principal);
+    }
+
+    .hero-eslogan {
+      font-size: 1.4rem;
+      color: #555555;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .hero-descripcion {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      color: #333333;
+    }
+
+    /* ==========================================================================
+       4. SECCIÓN NOSOTROS
+       ========================================================================== */
+    .nosotros-contenedor {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nosotros-imagen {
+      flex: 1;
+    }
+
+    .nosotros-contenido {
+      flex: 1;
+    }
+
+    .nosotros-lista {
+      list-style: square;
+      margin-left: 20px;
+      margin-top: 15px;
+    }
+
+    .nosotros-lista li {
+      margin-bottom: 8px;
+    }
+
+    /* ==========================================================================
+       5. SECCIÓN PRODUCTOS Y SERVICIOS
+       ========================================================================== */
+    .productos-seccion {
+      background-color: var(--color-fondo-suave);
+    }
+
+    .productos-contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .producto-tarjeta {
+      background-color: var(--color-secundario);
+      border: 1px solid var(--color-borde);
+      border-radius: 8px;
+      width: calc(33.333% - 14px); /* 3 columnas */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .producto-tarjeta:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .producto-imagen {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .producto-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .producto-titulo {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .producto-descripcion {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 15px;
+      flex-grow: 1;
+    }
+
+    .producto-precio {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--color-principal);
+      margin-bottom: 15px;
+    }
+
+    /* ==========================================================================
+       6. SECCIÓN BENEFICIOS
+       ========================================================================== */
+    .beneficios-contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .beneficio-caja {
+      flex: 1;
+      min-width: 250px;
+      background-color: var(--color-secundario);
+      padding: 30px;
+      border: 1px solid var(--color-borde);
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .beneficio-icono {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+
+    /* ==========================================================================
+       7. SECCIÓN TABLA DE CURSOS Y ASESORÍAS
+       ========================================================================== */
+    .tabla-seccion {
+      background-color: var(--color-fondo-suave);
+    }
+
+    .tabla-wrapper {
+      overflow-x: auto; /* Permite scroll horizontal en pantallas muy pequeñas */
+    }
+
+    .tabla-cursos {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: var(--color-secundario);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .tabla-cursos th,
+    .tabla-cursos td {
+      padding: 15px 20px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-borde);
+    }
+
+    .tabla-cursos thead {
+      background-color: var(--color-principal);
+      color: var(--color-secundario);
+    }
+
+    .tabla-cursos thead th {
+      font-family: Helvetica, sans-serif;
+      font-size: 1rem;
+    }
+
+    .tabla-cursos tbody tr:hover {
+      background-color: #f5ecec;
+    }
+
+    /* ==========================================================================
+       8. SECCIÓN GALERÍA
+       ========================================================================== */
+    .galeria-contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .galeria-item {
+      width: calc(33.333% - 14px);
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .galeria-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .galeria-item img:hover {
+      transform: scale(1.05);
+    }
+
+    /* ==========================================================================
+       9. SECCIÓN FORMULARIO DE CONTACTO
+       ========================================================================== */
+    .contacto-seccion {
+      background-color: var(--color-fondo-suave);
+    }
+
+    .formulario-contacto {
+      max-width: 700px;
+      margin: 0 auto;
+      background-color: var(--color-secundario);
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--color-borde);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .grupo-formulario {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .grupo-formulario label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: var(--color-complementario);
+    }
+
+    .grupo-formulario input,
+    .grupo-formulario select,
+    .grupo-formulario textarea {
+      padding: 12px;
+      border: 1px solid var(--color-borde);
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+    }
+
+    .grupo-formulario input:focus,
+    .grupo-formulario select:focus,
+    .grupo-formulario textarea:focus {
+      outline: none;
+      border-color: var(--color-principal);
+    }
+
+    /* ==========================================================================
+       10. SECCIÓN FOOTER
+       ========================================================================== */
+    .pie-pagina {
+      background-color: var(--color-principal);
+      color: var(--color-secundario);
+      padding: 40px 0 20px 0;
+    }
+
+    .pie-pagina-contenedor {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .pie-pagina-columna {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .pie-pagina-columna h3,
+    .pie-pagina-columna h4 {
+      color: var(--color-secundario);
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 8px;
+    }
+
+    .pie-pagina-columna p,
+    .pie-pagina-columna a {
+      color: var(--color-secundario);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .pie-pagina-derechos {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+    }
+
+    /* ==========================================================================
+       11. DISEÑO RESPONSIVE (MEDIA QUERIES)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .encabezado-contenedor {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .menu {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        gap: 8px;
+      }
+
+      .hero-contenedor {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nosotros-contenedor {
+        flex-direction: column;
+      }
+
+      .producto-tarjeta {
+        width: 100%; /* Las tarjetas pasan a 1 sola columna */
+      }
+
+      .galeria-item {
+        width: calc(50% - 10px); /* 2 columnas en tablets */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .galeria-item {
+        width: 100%; /* 1 columna en celulares */
+      }
+      
+      .formulario-contacto {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. ENCABEZADO Y NAVEGACIÓN
+       ========================================================================== -->
+  <header class="encabezado">
+    <div class="encabezado-contenedor">
+      <div class="logo">
+        Alejo’s pistacho
+        <span>Delicias en tu mesa</span>
+      </div>
+      <nav>
+        <ul class="menu">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       2. HERO / SECCIÓN PRINCIPAL
+       ========================================================================== -->
+  <section id="inicio" class="hero">
+    <div class="contenedor hero-contenedor">
+      <!-- Columna izquierda: Información principal -->
+      <div class="hero-columna-izquierda">
+        <h1 class="hero-titulo">Alejo’s pistacho</h1>
+        <p class="hero-eslogan">delicias en tu mesa</p>
+        <p class="hero-descripcion">
+          Plataforma gastronómica dedicada a comprar productos artesanales y asesoría personalizada en cursos de panadería y repostería en Medellín.
+        </p>
+        <a href="#contacto" class="boton">Solicitar Asesoría o Pedido</a>
+      </div>
+      
+      <!-- Columna derecha: Imagen ilustrativa -->
+      <div class="hero-columna-derecha">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80" alt="Productos artesanales de panadería Alejo's pistacho" onerror="this.src='https://placehold.co/600x400/800020/ffffff?text=Alejo\'s+Pistacho'">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       3. SECCIÓN NOSOTROS
+       ========================================================================== -->
+  <section id="nosotros" class="contenedor">
+    <h2 class="titulo-seccion">Quiénes Somos</h2>
+    <p class="subtitulo-seccion">Tradición, pasión y sabor artesanal en Medellín</p>
+
+    <div class="nosotros-contenedor">
+      <div class="nosotros-imagen">
+        <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Panadería artesanal y taller gastronómico" onerror="this.src='https://placehold.co/600x400/800020/ffffff?text=Nosotros'">
+      </div>
+      <div class="nosotros-contenido">
+        <h3>Nuestra Historia y Propósito</h3>
+        <p>
+          En <strong>Alejo’s pistacho</strong> nos apasiona llevar sabor y calidad a cada mesa. Somos una plataforma gastronómica integral que une lo mejor de los productos horneados tradicionales con la formación profesional.
+        </p>
+        <br>
+        <p><strong>¿A quién ayudamos?</strong></p>
+        <ul class="nosotros-lista">
+          <li><strong>Estudiantes:</strong> Brindamos capacitación técnica y práctica en técnicas avanzadas de hojaldre y panadería.</li>
+          <li><strong>Dueños de tiendas:</strong> Proveemos productos horneados de alta calidad con excelente margen para distribución comercial.</li>
+        </ul>
+        <br>
+        <p>
+          <strong>¿Qué nos diferencia?</strong> El cuidado en la selección de nuestros ingredientes, los procesos artesanales y el acompañamiento personalizado para emprendedores gastronómicos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4. SECCIÓN PRODUCTOS Y SERVICIOS
+       ========================================================================== -->
+  <section id="productos" class="productos-seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Nuestros Productos</h2>
+      <p class="subtitulo-seccion">Horneados frescos preparados diariamente con receta de la casa</p>
+
+      <div class="productos-contenedor">
+        <!-- Tarjeta 1 -->
+        <article class="producto-tarjeta">
+          <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=500&q=80" alt="Palos de queso con guayaba o arequipe" class="producto-imagen" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Palos+de+Queso'">
+          <div class="producto-info">
+            <h3 class="producto-titulo">Palos de queso</h3>
+            <p class="producto-descripcion">Crujientes palitos hojaldrados rellenos de queso costeño y acompañados con guayaba o arequipe.</p>
+            <p class="producto-precio">$3.500 c/u</p>
+            <a href="#contacto" class="boton boton-secundario">Pedir ahora</a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 2 -->
+        <article class="producto-tarjeta">
+          <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80" alt="Empanadas argentinas de pollo o carne" class="producto-imagen" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Empanadas+Argentinas'">
+          <div class="producto-info">
+            <h3 class="producto-titulo">Empanadas argentinas</h3>
+            <p class="producto-descripcion">Auténticas empanadas horneadas con jugoso relleno de pollo sazonado o carne cortada a cuchillo.</p>
+            <p class="producto-precio">$5.000 c/u</p>
+            <a href="#contacto" class="boton boton-secundario">Pedir ahora</a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 3 -->
+        <article class="producto-tarjeta">
+          <img src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=500&q=80" alt="Alfajores de maicena artesanales" class="producto-imagen" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Alfajores'">
+          <div class="producto-info">
+            <h3 class="producto-titulo">Alfajores de maicena</h3>
+            <p class="producto-descripcion">Suaves bocados de galleta que se deshacen en la boca, rellenos de dulce de leche y coco rallado.</p>
+            <p class="producto-precio">$4.000 c/u</p>
+            <a href="#contacto" class="boton boton-secundario">Pedir ahora</a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 4 -->
+        <article class="producto-tarjeta">
+          <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=500&q=80" alt="Galletas estilo New York con chispas de chocolate" class="producto-imagen" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galletas+NY'">
+          <div class="producto-info">
+            <h3 class="producto-titulo">Galletas estilo New York</h3>
+            <p class="producto-descripcion">Galletas gruesas, crujientes por fuera y suave centro derretido con nueces y chocolate semi-amargo.</p>
+            <p class="producto-precio">$6.000 c/u</p>
+            <a href="#contacto" class="boton boton-secundario">Pedir ahora</a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 5 -->
+        <article class="producto-tarjeta">
+          <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=500&q=80" alt="Asesoría personalizada en hojaldre" class="producto-imagen" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Asesoria+Hojaldre'">
+          <div class="producto-info">
+            <h3 class="producto-titulo">Asesoría en hojaldre</h3>
+            <p class="producto-descripcion">Capacitación 1 a 1 para dominar los pliegues, laminado perfecto y tiempos de horneado profesional.</p>
+            <p class="producto-precio">$120.000 / Sesión</p>
+            <a href="#contacto" class="boton boton-secundario">Reservar Curso</a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 6 -->
+        <article class="producto-tarjeta">
+          <img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=500&q=80" alt="Panes familiares artesanales" class="producto-imagen" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Panes+Familiares'">
+          <div class="producto-info">
+            <h3 class="producto-titulo">Panes familiares</h3>
+            <p class="producto-descripcion">Hogazas e integrales con fermentación lenta, ideales para acompañar el desayuno o la cena en familia.</p>
+            <p class="producto-precio">$12.000 c/u</p>
+            <a href="#contacto" class="boton boton-secundario">Pedir ahora</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       5. SECCIÓN BENEFICIOS Y SERVICIOS
+       ========================================================================== -->
+  <section id="servicios" class="contenedor">
+    <h2 class="titulo-seccion">Nuestros Servicios y Beneficios</h2>
+    <p class="subtitulo-seccion">Razones para elegirnos como tu aliado gastronómico</p>
+
+    <div class="beneficios-contenedor">
+      <div class="beneficio-caja">
+        <div class="beneficio-icono">🥐</div>
+        <h3>Ingredientes Seleccionados</h3>
+        <p>Trabajamos únicamente con mantequillas puras y harina de alta fuerza sin conservantes artificiales.</p>
+      </div>
+
+      <div class="beneficio-caja">
+        <div class="beneficio-icono">🎓</div>
+        <h3>Capacitación Técnica</h3>
+        <p>Aprende técnicas reales de panadería aptas tanto para emprendedores como para aficionados.</p>
+      </div>
+
+      <div class="beneficio-caja">
+        <div class="beneficio-icono">🚚</div>
+        <h3>Despachos Institucionales</h3>
+        <p>Surtido directo a tiendas, cafeterías y negocios locales con precios especiales por volumen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       6. SECCIÓN TABLA DE CURSOS Y PRECIOS
+       ========================================================================== -->
+  <section class="tabla-seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Oferta Académica y Asesorías</h2>
+      <p class="subtitulo-seccion">Revisa nuestros cursos disponibles para estudiantes y emprendedores</p>
+
+      <div class="tabla-wrapper">
+        <table class="tabla-cursos">
+          <thead>
+            <tr>
+              <th>Curso / Asesoría</th>
+              <th>Modalidad</th>
+              <th>Duración</th>
+              <th>Dirigido a</th>
+              <th>Inversión</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Taller Básico de Hojaldre</td>
+              <td>Presencial (Medellín)</td>
+              <td>8 Horas</td>
+              <td>Estudiantes / Principiantes</td>
+              <td>$150.000 COP</td>
+            </tr>
+            <tr>
+              <td>Asesoría Personalizada Hojaldre</td>
+              <td>Presencial / Individual</td>
+              <td>4 Horas</td>
+              <td>Emprendedores / Tiendas</td>
+              <td>$120.000 COP</td>
+            </tr>
+            <tr>
+              <td>Panadería Artesanal Familiar</td>
+              <td>Presencial / Grupal</td>
+              <td>12 Horas</td>
+              <td>Público General</td>
+              <td>$200.000 COP</td>
+            </tr>
+            <tr>
+              <td>Repostería Estilo New York</td>
+              <td>Virtual en Vivo</td>
+              <td>6 Horas</td>
+              <td>Estudiantes</td>
+              <td>$90.000 COP</td>
+            </tr>
+            <tr>
+              <td>Estandarización para Tiendas</td>
+              <td>Presencial en Negocio</td>
+              <td>16 Horas</td>
+              <td>Dueños de Tiendas</td>
+              <td>$350.000 COP</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       7. SECCIÓN GALERÍA
+       ========================================================================== -->
+  <section id="galeria" class="contenedor">
+    <h2 class="titulo-seccion">Galería de Delicias</h2>
+    <p class="subtitulo-seccion">Un recorrido visual por nuestros productos y talleres de repostería</p>
+
+    <div class="galeria-contenedor">
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80" alt="Baguettes y panes artesanales recién horneados" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galeria+1'">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Mesa de trabajo con harina y masa de hojaldre" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galeria+2'">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80" alt="Horneado de galletas con chispas de chocolate" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galeria+3'">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=600&q=80" alt="Corte de croissant hojaldrado crujiente" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galeria+4'">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1568254183919-78a4f43a2877?auto=format&fit=crop&w=600&q=80" alt="Variedad de alfajores cubiertos con coco" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galeria+5'">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Taller práctico de panadería en Medellín" onerror="this.src='https://placehold.co/400x300/800020/ffffff?text=Galeria+6'">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       8. SECCIÓN FORMULARIO DE CONTACTO
+       ========================================================================== -->
+  <section id="contacto" class="contacto-seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Contáctanos</h2>
+      <p class="subtitulo-seccion">Escríbenos para hacer un pedido o solicitar información sobre los cursos</p>
+
+      <form class="formulario-contacto" action="#" method="post">
+        <div class="grupo-formulario">
+          <label for="nombre">Nombre completo:</label>
+          <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre y apellido" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="telefono">Teléfono o WhatsApp:</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="300 000 0000" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="ciudad">Ciudad:</label>
+          <input type="text" id="ciudad" name="ciudad" value="Medellín" required>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="servicio">Servicio de interés:</label>
+          <select id="servicio" name="servicio" required>
+            <option value="">-- Selecciona una opción --</option>
+            <option value="pedido-productos">Pedido de productos horneados</option>
+            <option value="asesoria-hojaldre">Asesoría personalizada en hojaldre</option>
+            <option value="curso-panaderia">Curso de panadería artesanal</option>
+            <option value="surtido-tienda">Surtido al por mayor para tiendas</option>
+          </select>
+        </div>
+
+        <div class="grupo-formulario">
+          <label for="mensaje">Mensaje o detalle del pedido:</label>
+          <textarea id="mensaje" name="mensaje" rows="5" placeholder="Déjanos tus dudas o el detalle de los productos que deseas encargar..." required></textarea>
+        </div>
+
+        <button type="submit" class="boton" style="width: 100%;">Enviar Mensaje</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       9. FOOTER / PIE DE PÁGINA
+       ========================================================================== -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <div class="pie-pagina-contenedor">
+        <!-- Columna 1: Datos del negocio -->
+        <div class="pie-pagina-columna">
+          <h3>Alejo’s pistacho</h3>
+          <p><em>delicias en tu mesa</em></p>
+          <p>Plataforma gastronómica dedicada a la repostería artesanal y formación técnica.</p>
+        </div>
+
+        <!-- Columna 2: Ubicación y Contacto -->
+        <div class="pie-pagina-columna">
+          <h4>Contacto</h4>
+          <p><strong>Ciudad:</strong> Medellín</p>
+          <p><strong>Teléfono:</strong> 300 000 0000</p>
+          <p><strong>Correo:</strong> Alejopistacho@gmail.com</p>
+        </div>
+
+        <!-- Columna 3: Redes sociales -->
+        <div class="pie-pagina-columna">
+          <h4>Síguenos</h4>
+          <p>Instagram: <a href="https://instagram.com" target="_blank">@alejo_pistacho</a></p>
+        </div>
+      </div>
+
+      <!-- Derechos reservados -->
+      <div class="pie-pagina-derechos">
+        <p>&copy; 2026 Alejo’s pistacho — Todos los derechos reservados. Evaluación Segundo Momento.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
